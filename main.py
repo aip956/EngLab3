@@ -33,15 +33,23 @@ def search_warriors(
     t: Optional[str] = Query(None, description="Search term")
 ):
     if t is None:
-        return db.query(Warrior).all()
-    return db.query(Warrior).filter(
+        warriors = db.query(Warrior).all()
+        if not warriors:
+            raise HTTPException(status_code=404, detail="No warriors found")
+        return warriors
+    filtered_warriors = db.query(Warrior).filter(
         func.lower(Warrior.name).contains(func.lower(t))
     ).all()
+    if not filtered_warriors:
+        raise HTTPException(status_code=404, detail="No matching warriors found")
+    return filtered_warriors
+
 
 # Endpoint to count registered warriors
 @app.get("/counting-warriors")
 def count_warriors(db: Session = Depends(get_db)):
-    return db.query(Warrior).count()
+    count = db.query(Warrior).count()
+    return {"Count: ": count}
 
 # Endpiont to create a warrior
 @app.post("/warrior", response_model=WarriorBase)
