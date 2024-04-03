@@ -1,5 +1,5 @@
-from fastapi import FastAPI, HTTPException, Query
-from typing import List, Annotated
+from fastapi import FastAPI, HTTPException, Query, Depends
+from typing import List, Optional
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine
 from models import Base, Warrior, WarriorCreate
