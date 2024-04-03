@@ -2,8 +2,8 @@ from fastapi import FastAPI, HTTPException, Query, Depends
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine
-from models import Base, Warrior, WarriorCreate
 from sqlalchemy import func
+from models import Base, Warrior, WarriorBase, WarriorCreate
 
 app = FastAPI()
 
@@ -19,7 +19,7 @@ def get_db():
         db.close()
 
 # Endpoint to get warrior by ID
-@app.get("/warrior/{id}", response_model=Warrior)
+@app.get("/warrior/{id}", response_model=WarriorBase)
 def get_warrior_by_id(id: int, db: Session = Depends(get_db)):
     warrior = db.query(Warrior).filter(Warrior.id == id).first()
     if warrior is None:
@@ -27,7 +27,7 @@ def get_warrior_by_id(id: int, db: Session = Depends(get_db)):
     return warrior
 
 # Endpoint to search warriors by attributes
-@app.get("/warrior")
+@app.get("/warrior", response_model=List[WarriorBase])
 def search_warriors(
     db: Session = Depends(get_db),
     t: Optional[str] = Query(None, description="Search term")
@@ -44,7 +44,7 @@ def count_warriors(db: Session = Depends(get_db)):
     return db.query(Warrior).count()
 
 # Endpiont to create a warrior
-@app.post("/warrior", response_model=Warrior)
+@app.post("/warrior", response_model=WarriorBase)
 def create_warrior(warrior: WarriorCreate, db: Session = Depends(get_db)):
     db_warrior = Warrior(**warrior.dict())
     db.add(db_warrior)
