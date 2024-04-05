@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: uvicorn main:app --reload —-port 8000 —-host 0.0.0.0
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+      #Maps host system's 8000 port to container's 8000 port
+    volumes: 
+      - .:/app
+      # Sync our host with docker for hot reloading
