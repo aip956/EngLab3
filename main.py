@@ -59,3 +59,9 @@ def create_warrior(warrior: WarriorCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_warrior)
     return db_warrior
+
+
+# Use port 8080
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8080)
