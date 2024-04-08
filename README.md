@@ -18,6 +18,19 @@ curl -X POST "http://127.0.0.1:8000/warrior" -H "Content-Type: application/json"
     "dob": "1970-01-01",
     "fight_skills": "BJJ, KungFu, Judo"
 }'
+To add to the container's database:
+Change database.py: SQLALCHEMY_DATABASE_URL = "postgresql://postgres:local@db:5432/EngLab3"
+
+curl -X POST "http://172.18.0.3:8000/warrior" -H "Content-Type: application/json" -d '{
+    "name": "Master Yoda",
+    "dob": "1970-01-01",
+    "fight_skills": "BJJ, KungFu, Judo"
+}'
+curl -X POST "http://englab3-web-1:8000/warrior" -H "Content-Type: application/json" -d '{
+    "name": "Master Yoda",
+    "dob": "1970-01-01",
+    "fight_skills": "BJJ, KungFu, Judo"
+}'
 
 Select all warriors:
 curl -X GET "http://127.0.0.1:8000/warrior"
@@ -38,3 +51,4 @@ curl -X GET "http://127.0.0.1:8000/counting-warriors"
 
 Docker: Added postgres to Docker (docker-compose.yaml file). 
 To rebuild the Docker containers: docker-compose up --build
+For status: docker-compose ps
