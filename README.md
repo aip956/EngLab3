@@ -36,3 +36,5 @@ curl -X GET "http://127.0.0.1:8000/warrior?t=Yoda" returns Yoda
 GET /counting-warriors – count registered warriors;
 curl -X GET "http://127.0.0.1:8000/counting-warriors"
 
+Docker: Added postgres to Docker (docker-compose.yaml file). 
+To rebuild the Docker containers: docker-compose up --build
