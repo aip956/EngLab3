@@ -1,16 +1,22 @@
-Create env:
-python3 -m venv env
-activate env:
-source env/bin/activate
-Install dependencies:
-pip install fastapi sqlalchemy psycopg2-binary
-connection port to connect postgres to alchemy
+## Create env:
 
-To run API:
-Install uvicorn: pip install uvicorn 
-Run the API: uvicorn main:app --reload
+- python3 -m venv env
 
-To POST (add):
+## activate env:
+
+- source env/bin/activate
+
+## Install dependencies:
+
+- pip install fastapi sqlalchemy psycopg2-binary
+- connection port to connect postgres to alchemy
+
+## To run API:
+
+- Install uvicorn: pip install uvicorn 
+- Run the API: uvicorn main:app --reload
+
+## To POST (add):
 Start the API using uvicorn main:app --reload
 
 curl -X POST "http://127.0.0.1:8000/warrior" -H "Content-Type: application/json" -d '{
@@ -18,7 +24,8 @@ curl -X POST "http://127.0.0.1:8000/warrior" -H "Content-Type: application/json"
     "dob": "1970-01-01",
     "fight_skills": "BJJ, KungFu, Judo"
 }'
-To add to the container's database:
+
+## To add to the container's database:
 Change database.py: SQLALCHEMY_DATABASE_URL = "postgresql://postgres:local@db:5432/EngLab3"
 
 curl -X POST "http://172.18.0.3:8000/warrior" -H "Content-Type: application/json" -d '{
@@ -32,7 +39,7 @@ curl -X POST "http://englab3-web-1:8000/warrior" -H "Content-Type: application/j
     "fight_skills": "BJJ, KungFu, Judo"
 }'
 
-Select all warriors:
+## Select all warriors:
 curl -X GET "http://127.0.0.1:8000/warrior"
 
 
@@ -49,6 +56,6 @@ curl -X GET "http://127.0.0.1:8000/warrior?t=Yoda" returns Yoda
 GET /counting-warriors – count registered warriors;
 curl -X GET "http://127.0.0.1:8000/counting-warriors"
 
-Docker: Added postgres to Docker (docker-compose.yaml file). 
+Docker: Added postgres to Docker (docker-compose.yaml file).
 To rebuild the Docker containers: docker-compose up --build
 For status: docker-compose ps
