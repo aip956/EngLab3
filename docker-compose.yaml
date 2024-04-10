@@ -8,7 +8,7 @@ services:
       - .env
     ports:
       - "8080:8000"
-      #Maps host system's 8000 port to container's 8000 port
+      #Maps host system's 8080 port to container's 8000 port
     volumes: 
       - .:/app
       # Sync our host with docker for hot reloading

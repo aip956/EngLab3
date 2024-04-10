@@ -21,6 +21,8 @@ curl -X POST "http://127.0.0.1:8000/warrior" -H "Content-Type: application/json"
 To add to the container's database:
 Change database.py: SQLALCHEMY_DATABASE_URL = "postgresql://postgres:local@db:5432/EngLab3"
 
+go to localhost:8080/docs to enable Swagger
+
 curl -X POST "http://172.18.0.3:8000/warrior" -H "Content-Type: application/json" -d '{
     "name": "Master Yoda",
     "dob": "1970-01-01",
@@ -52,3 +54,9 @@ curl -X GET "http://127.0.0.1:8000/counting-warriors"
 Docker: Added postgres to Docker (docker-compose.yaml file). 
 To rebuild the Docker containers: docker-compose up --build
 For status: docker-compose ps
+
+Uvicorn creates server / load balances; no need for NGINX
+
+need to change server to junicorn
+add to requirements, add to docker-compose
+Consider the restrictions on memory, etc.
