@@ -2,6 +2,8 @@ version: '3.8'
 
 services:
   web:
+    mem_limit: 3g
+    cpus: 1.5
     build: .
     command: gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker -b "0.0.0.0:8000"
     env_file:
@@ -16,6 +18,8 @@ services:
       - db
 
   db:
+    mem_limit: 3g
+    cpus: 1.5
     image: postgres
     restart: always
     environment:
