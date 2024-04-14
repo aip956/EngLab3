@@ -60,3 +60,11 @@ Uvicorn creates server / load balances; no need for NGINX
 need to change server to junicorn
 add to requirements, add to docker-compose
 Consider the restrictions on memory, etc.
+
+Gabriel has shell script for Gatling
+Ricky modified a simulation script; simulation.java file; use example as template
+Run in vscode or intellij; engine.java
+clone ricky's repo
+open pom.xml file as a project to install dependecies; instead of opening folder of project, open pom
+postman, browswer, gatling; 3 ways to test
+redis, 
