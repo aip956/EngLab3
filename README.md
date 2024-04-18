@@ -16,7 +16,7 @@ Clone the repository and navigate to the project directory.
 Build and start the Docker containers:
 
 ```
-docker-compose up --build
+make buildup
 ```
 
 This command starts all the required services, including the FastAPI application 
