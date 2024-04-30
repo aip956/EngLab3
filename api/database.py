@@ -9,7 +9,12 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-Base.metadata.create_all(bind=engine)
+def create_database_tables():
+    import models
+    Base.metadata.create_all(bind=engine)
+
+if __name__=="__main__":
+    create_database_tables()
 
 
 # Dependency to get database session

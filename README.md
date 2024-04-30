@@ -7,6 +7,17 @@ allowing creation, retrieval, and search of warrior records. It leverages Postgr
 and runs entirely within Docker containers.
 
 ## Setup Instructions
+### To Run the API locally
+Enter the env:
+    * source env/bin/activate
+Start postgres: 
+    * Verify you have it installed:  brew list | grep postgresql
+    * Install if necessarey: brew insall postresql
+    * Start the db: brew services start postgresql@14 (or postgres)
+    * Connect: psql -U postgres
+
+
+
 
 ### Docker Setup
 Ensure Docker and Docker Compose are installed on your machine. 
