@@ -15,6 +15,8 @@ def create_database_tables():
 
 if __name__=="__main__":
     create_database_tables()
+    print("Hello I'm creating the table")
+    # Am i executing it; maybe not
 
 
 # Dependency to get database session
