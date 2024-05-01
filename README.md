@@ -10,6 +10,8 @@ To run API:
 Install uvicorn: pip install uvicorn 
 Run the API: uvicorn main:app --reload
 
+Build containers: docker-compose up --build
+Validated for 20 skills, but not for max 250 length
 To POST (add):
 Start the API using uvicorn main:app --reload
 
