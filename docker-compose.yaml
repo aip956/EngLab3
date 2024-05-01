@@ -1,21 +1,31 @@
 version: '3.8'
 
 services:
-  web:
-    build: .
-    command: uvicorn main:app --reload --port 8000 --host 0.0.0.0
-    env_file:
-      - .env
+  api:
+    deploy:
+      resources:
+        limits:
+          cpus: '1.50'
+          memory: 3g
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    command: gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker -b "0.0.0.0:8000"
     ports:
-      - "8080:8000"
+      - "8000:8000"
       #Maps host system's 8080 port to container's 8000 port
-    volumes: 
-      - .:/app
+    volumes:
+      - ./api:/api
       # Sync our host with docker for hot reloading
     depends_on:
       - db
 
   db:
+    deploy:
+      resources:
+        limits:
+          cpus: '1.50'
+          memory: 3g
     image: postgres
     restart: always
     environment:

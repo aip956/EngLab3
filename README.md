@@ -1,64 +1,87 @@
-Create env:
-python3 -m venv env
-activate env:
-source env/bin/activate
-Install dependencies:
-pip install fastapi sqlalchemy psycopg2-binary
-connection port to connect postgres to alchemy
+# Engineering Lab 3
 
-To run API:
-Install uvicorn: pip install uvicorn 
-Run the API: uvicorn main:app --reload
+## Overview
 
 Build containers: docker-compose up --build
 Validated for 20 skills, but not for max 250 length
 To POST (add):
 Start the API using uvicorn main:app --reload
+This project is a FastAPI application designed to manage a database of warriors, 
+allowing creation, retrieval, and search of warrior records. It leverages PostgreSQL 
+and runs entirely within Docker containers.
 
-curl -X POST "http://127.0.0.1:8000/warrior" -H "Content-Type: application/json" -d '{
-    "name": "Master Yoda",
-    "dob": "1970-01-01",
-    "fight_skills": "BJJ, KungFu, Judo"
+## Setup Instructions
+### To Run the API locally
+Enter the env:
+    * source env/bin/activate
+Start postgres: 
+    * Verify you have it installed:  brew list | grep postgresql
+    * Install if necessarey: brew insall postresql
+    * Start the db: brew services start postgresql@14 (or postgres)
+    * Connect: psql -U postgres
+
+
+
+
+### Docker Setup
+Ensure Docker and Docker Compose are installed on your machine. 
+Clone the repository and navigate to the project directory.
+
+### Building and Running Containers
+Build and start the Docker containers:
+
+```
+make buildup
+```
+
+This command starts all the required services, including the FastAPI application 
+and PostgreSQL database, as defined in the docker-compose.yaml file.
+
+### API Endpoints
+
+Access the API through the Docker container's network. Here are some example commands:
+
+#### Create a Warrior
+
+```
+curl -X POST "http://localhost:8000/warrior" -H "Content-Type: application/json" -d '{
+"name": "Master Yoda",
+"dob": "1970-01-01",
+"fight_skills": "BJJ, KungFu, Judo"
 }'
-To add to the container's database:
-Change database.py: SQLALCHEMY_DATABASE_URL = "postgresql://postgres:local@db:5432/EngLab3"
+```
 
-go to localhost:8080/docs to enable Swagger
+#### Retrieve Warriors
 
-curl -X POST "http://172.18.0.3:8000/warrior" -H "Content-Type: application/json" -d '{
-    "name": "Master Yoda",
-    "dob": "1970-01-01",
-    "fight_skills": "BJJ, KungFu, Judo"
-}'
-curl -X POST "http://englab3-web-1:8000/warrior" -H "Content-Type: application/json" -d '{
-    "name": "Master Yoda",
-    "dob": "1970-01-01",
-    "fight_skills": "BJJ, KungFu, Judo"
-}'
+##### All warriors:
 
-Select all warriors:
-curl -X GET "http://127.0.0.1:8000/warrior"
+```
+curl -X GET "http://localhost:8000/warrior"
+```
+
+##### Warrior by ID:
+
+```
+curl -X GET "http://localhost:8000/warrior/{id}"
+```
+
+#### Search and Count Warriors
+
+##### Search by attribute:
+
+```
+curl -X GET "http://localhost:8000/warrior?t=Yoda"
+```
+
+##### Count warriors:
+
+```
+curl -X GET "http://localhost:8000/counting-warriors"
+```
+
+### Testing
+
+Access http://localhost:8000/docs to view and interact with the Swagger UI, which provides
+a convenient way to test the API directly from your web browser.
 
 
-GET /warrior/[:id] 
-curl -X GET "http://127.0.0.1:8000/warrior/{id}"
-curl -X GET "http://127.0.0.1:8000/warrior/{1}" returns the Yoda entry
-
-
-GET /warrior?t=[:search term] – search warrior attributes 
-curl -X GET "http://127.0.0.1:8000/warrior?t=search_term"
-curl -X GET "http://127.0.0.1:8000/warrior?t=Yoda" returns Yoda
-
-
-GET /counting-warriors – count registered warriors;
-curl -X GET "http://127.0.0.1:8000/counting-warriors"
-
-Docker: Added postgres to Docker (docker-compose.yaml file). 
-To rebuild the Docker containers: docker-compose up --build
-For status: docker-compose ps
-
-Uvicorn creates server / load balances; no need for NGINX
-
-need to change server to junicorn
-add to requirements, add to docker-compose
-Consider the restrictions on memory, etc.
